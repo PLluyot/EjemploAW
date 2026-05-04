@@ -49,16 +49,18 @@ $peliculas = $pdo->query($query)->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoClub Premium | Gestión de Cine</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <header>
-        <div class="logo">VIDEOCLUB<span>★</span>PREMIUM</div>
+        <div class="logo">VIDEOCLUB<span>★ prueba</span>PREMIUM</div>
         <nav>
             <ul>
                 <li><a onclick="showSection('movies')" id="nav-movies" class="active">Ver Películas</a></li>
@@ -69,24 +71,24 @@ $peliculas = $pdo->query($query)->fetchAll();
     </header>
 
     <div class="container">
-        
+
         <!-- Vista de Películas -->
         <section id="movies" class="active">
             <h2>Catálogo de Películas</h2>
             <div class="movie-grid">
                 <?php foreach ($peliculas as $p): ?>
-                <div class="movie-card" onclick="showMovieDetails('<?= addslashes($p['titulo']) ?>', '<?= $p['anio_estreno'] ?>', '<?= addslashes($p['genero']) ?>', '<?= addslashes($p['nombre_director']) ?>', '<?= $p['poster_url'] ?>', '<?= addslashes($p['descripcion']) ?>')">
-                    <div class="poster-container" style="background: url('<?= $p['poster_url'] ?>') center/cover;">
-                        <img src="<?= $p['poster_url'] ?>" alt="<?= $p['titulo'] ?> Poster">
+                    <div class="movie-card" onclick="showMovieDetails('<?= addslashes($p['titulo']) ?>', '<?= $p['anio_estreno'] ?>', '<?= addslashes($p['genero']) ?>', '<?= addslashes($p['nombre_director']) ?>', '<?= $p['poster_url'] ?>', '<?= addslashes($p['descripcion']) ?>')">
+                        <div class="poster-container" style="background: url('<?= $p['poster_url'] ?>') center/cover;">
+                            <img src="<?= $p['poster_url'] ?>" alt="<?= $p['titulo'] ?> Poster">
+                        </div>
+                        <div class="card-content">
+                            <span class="genre"><?= $p['genero'] ?></span>
+                            <h3><?= $p['titulo'] ?></h3>
+                            <div class="info">Año: <?= $p['anio_estreno'] ?></div>
+                            <span class="director">Director: <?= $p['nombre_director'] ?></span>
+                            <a href="?delete_id=<?= $p['id'] ?>" class="delete-link" onclick="event.stopPropagation(); return confirm('¿Borrar película?')">Eliminar</a>
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <span class="genre"><?= $p['genero'] ?></span>
-                        <h3><?= $p['titulo'] ?></h3>
-                        <div class="info">Año: <?= $p['anio_estreno'] ?></div>
-                        <span class="director">Director: <?= $p['nombre_director'] ?></span>
-                        <a href="?delete_id=<?= $p['id'] ?>" class="delete-link" onclick="event.stopPropagation(); return confirm('¿Borrar película?')">Eliminar</a>
-                    </div>
-                </div>
                 <?php endforeach; ?>
             </div>
         </section>
@@ -146,7 +148,7 @@ $peliculas = $pdo->query($query)->fetchAll();
                         <select name="director_id" id="director-select" required>
                             <option value="">Selecciona un director...</option>
                             <?php foreach ($directores as $d): ?>
-                            <option value="<?= $d['id'] ?>"><?= $d['nombre'] ?></option>
+                                <option value="<?= $d['id'] ?>"><?= $d['nombre'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -198,11 +200,14 @@ $peliculas = $pdo->query($query)->fetchAll();
             // Mostrar la elegida
             const targetSection = document.getElementById(sectionId);
             if (targetSection) targetSection.classList.add('active');
-            
+
             const navLink = document.getElementById('nav-' + sectionId);
             if (navLink) navLink.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         // Manejar la sección activa por URL (para redirecciones PHP)
@@ -221,9 +226,10 @@ $peliculas = $pdo->query($query)->fetchAll();
             document.getElementById('detail-director').innerText = director;
             document.getElementById('detail-img').src = imgSrc;
             document.getElementById('detail-description').innerText = desc;
-            
+
             showSection('movie-details');
         }
     </script>
 </body>
+
 </html>
