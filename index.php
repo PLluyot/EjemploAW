@@ -60,7 +60,7 @@ $peliculas = $pdo->query($query)->fetchAll();
 <body>
 
     <header>
-        <div class="logo">VIDEOCLUB PEPE<span>★</span>PREMIUM</div>
+        <div class="logo">VIDEOCLUB<span>★</span>PREMIUM</div>
         <nav>
             <ul>
                 <li><a onclick="showSection('movies')" id="nav-movies" class="active">Ver Películas</a></li>
